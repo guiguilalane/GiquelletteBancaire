@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE PACKAGE SYSTEM "package.dtd">
+<PACKAGE NAME="generation.model" METAMODEL="MVC" NUMBER="17"
+ DOCUMENTATION="">
+	<fileHeader version="5" toolName="Mia-Generation" toolVersion="9.0.0"/>
+	<SCENARIO NAME="ScenarioModel" VISIBILITY="private" META_OBJECT="Model" CATEGORY="default" DOCUMENTATION="">
+		<SERVICE_CALL NAME="current" PACKAGE="System" META_OBJECT="Model"/>
+		<GENERATION_STEP TYPE="FileTemplate" PACKAGE="generation.model" META_OBJECT="Model" CATEGORY="default" NAME="ModelImplementation" PARAM_COUNT="0"/>
+		<GENERATION_STEP TYPE="FileTemplate" PACKAGE="generation.model" META_OBJECT="Model" CATEGORY="default" NAME="ModelInterface" PARAM_COUNT="0"/>
+	</SCENARIO>
+	<SCRIPT NAME="AttributModelView" META_OBJECT="Model" CATEGORY="default">
+		<TEXT><![CDATA[
+	private I[[name]] model;
+]]></TEXT>
+	</SCRIPT>
+	<SCRIPT NAME="ModelImplementation" META_OBJECT="Model" CATEGORY="default" FILE_ENCODING="UTF-8" VISIBILITY="private">
+		<TEXT><![CDATA[
+package com.mia.banque.model.impl;
+
+
+import java.util.List;
+import java.util.ArrayList;
+import com.mia.banque.model.I[[name]];
+[[linkimportOwned]]
+
+public class [[name]] implements I[[name]] {
+[[linkSimpleAttr]]
+[[linkOwnedAttr]]
+[[linkGetSetSimple]]
+[[linkGetSetOwnedImpl]]
+
+}
+]]></TEXT>
+		<PROPERTY NAME="Filename"/>
+	</SCRIPT>
+	<SCRIPT NAME="ModelImplementation$Filename" META_OBJECT="Model" CATEGORY="default">
+		<TEXT><![CDATA[
+com/mia/banque/model/impl/[[name]].java
+]]></TEXT>
+	</SCRIPT>
+	<SCRIPT NAME="ModelInterface" META_OBJECT="Model" CATEGORY="default" FILE_ENCODING="UTF-8" VISIBILITY="private">
+		<TEXT><![CDATA[
+package com.mia.banque.model;
+
+import java.util.List;
+
+public interface I[[name]] {
+
+[[linkScToGetSet]]
+
+[[linkGetSetOwnedElements]]
+
+}
+]]></TEXT>
+		<PROPERTY NAME="Filename"/>
+	</SCRIPT>
+	<SCRIPT NAME="ModelInterface$Filename" META_OBJECT="Model" CATEGORY="default">
+		<TEXT><![CDATA[
+com/mia/banque/model/I[[name]].java
+]]></TEXT>
+	</SCRIPT>
+	<SCRIPT NAME="implementationOwnedAttributs" META_OBJECT="Model" CATEGORY="default">
+		<TEXT><![CDATA[
+	private List<I[[name@¤] list[[name]];
+	
+]]></TEXT>
+	</SCRIPT>
+	<SCRIPT NAME="implementationOwnedGetSet" META_OBJECT="Model" CATEGORY="default">
+		<TEXT><![CDATA[
+public List<I[[name@¤] get[[name]]s() {
+		if (this.list[[name]] == null) {
+			this.list[[name]] = new ArrayList<I[[name@¤]();
+		}
+		return this.list[[name]];
+	}
+	
+	public void set[[name]]s(List<I[[name@¤] newValue) {
+		this.list[[name]] = newValue;
+	}
+]]></TEXT>
+	</SCRIPT>
+	<SCRIPT NAME="interfaceOwnedElements" META_OBJECT="Model" CATEGORY="default">
+		<TEXT><![CDATA[
+	public List<I[[name@¤] get[[name]]s();
+	
+	public void set[[name]]s(List<I[[name@¤] newValue);
+
+]]></TEXT>
+	</SCRIPT>
+	<TEXT_MACRO NAME="linkGetSetOwnedElements" META_OBJECT="Model" CATEGORY="default" RETURN_TYPE_KIND="primitive" RETURN_TYPE_NAME="String">
+		<TEXT><![CDATA[
+return manager.apply(current.getOwnedElements(), "interfaceOwnedElements");
+]]></TEXT>
+	</TEXT_MACRO>
+	<TEXT_MACRO NAME="linkGetSetOwnedImpl" META_OBJECT="Model" CATEGORY="default" RETURN_TYPE_KIND="primitive" RETURN_TYPE_NAME="String">
+		<TEXT><![CDATA[
+return manager.apply(current.getOwnedElements(), "implementationOwnedGetSet");
+]]></TEXT>
+	</TEXT_MACRO>
+	<TEXT_MACRO NAME="linkGetSetSimple" META_OBJECT="Model" CATEGORY="default" RETURN_TYPE_KIND="primitive" RETURN_TYPE_NAME="String">
+		<TEXT><![CDATA[
+return manager.apply(current.getProperties(), "implementationGetSetSimple");
+]]></TEXT>
+	</TEXT_MACRO>
+	<TEXT_MACRO NAME="linkOwnedAttr" META_OBJECT="Model" CATEGORY="default" RETURN_TYPE_KIND="primitive" RETURN_TYPE_NAME="String">
+		<TEXT><![CDATA[
+return manager.apply(current.getOwnedElements(), "implementationOwnedAttributs");
+]]></TEXT>
+	</TEXT_MACRO>
+	<TEXT_MACRO NAME="linkScToGetSet" META_OBJECT="Model" CATEGORY="default" RETURN_TYPE_KIND="primitive" RETURN_TYPE_NAME="String">
+		<TEXT><![CDATA[
+return manager.apply(current.getProperties(), "interfaceGetSet");
+]]></TEXT>
+	</TEXT_MACRO>
+	<TEXT_MACRO NAME="linkSimpleAttr" META_OBJECT="Model" CATEGORY="default" RETURN_TYPE_KIND="primitive" RETURN_TYPE_NAME="String">
+		<TEXT><![CDATA[
+return manager.apply(current.getProperties(), "implementationAttributsSimple");
+]]></TEXT>
+	</TEXT_MACRO>
+	<SCRIPT NAME="implementationAttributsSimple" META_OBJECT="ModelProperty" CATEGORY="default">
+		<TEXT><![CDATA[
+	private String [[name]];
+	
+]]></TEXT>
+	</SCRIPT>
+	<SCRIPT NAME="implementationGetSetSimple" META_OBJECT="ModelProperty" CATEGORY="default">
+		<TEXT><![CDATA[
+	public String get[[name]]() {
+		return this.[[name]];
+	}
+	
+	public void set[[name]](String newValue) {
+		this.[[name]] = newValue;
+	}
+	
+]]></TEXT>
+	</SCRIPT>
+	<SCRIPT NAME="interfaceGetSet" META_OBJECT="ModelProperty" CATEGORY="default">
+		<TEXT><![CDATA[
+	public String get[[name]]();
+	
+	public void set[[name]](String newValue);
+
+]]></TEXT>
+	</SCRIPT>
+</PACKAGE>

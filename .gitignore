@@ -1,6 +1,11 @@
 *.class
 
+
 # Package Files #
-*.jar
 *.war
 *.ear
+*/bin
+*~
+
+com.mia.banque.application.generated/src/*
+com.mia.banque.application.tests/src/*

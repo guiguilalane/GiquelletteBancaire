@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE PACKAGE SYSTEM "package.dtd">
+<PACKAGE NAME="generation.ui.controller" METAMODEL="MVC" NUMBER="7"
+ DOCUMENTATION="">
+	<fileHeader version="5" toolName="Mia-Generation" toolVersion="9.0.0"/>
+	<SCENARIO NAME="ScenarioControler" VISIBILITY="public" META_OBJECT="View" CATEGORY="default" DOCUMENTATION="">
+		<SERVICE_CALL NAME="current" PACKAGE="System" META_OBJECT="View"/>
+		<GENERATION_STEP TYPE="FileTemplate" PACKAGE="generation.ui.controller" META_OBJECT="View" CATEGORY="default" NAME="ImplementationControler" PARAM_COUNT="0"/>
+		<GENERATION_STEP TYPE="FileTemplate" PACKAGE="generation.ui.controller" META_OBJECT="View" CATEGORY="default" NAME="InterfaceControler" PARAM_COUNT="0"/>
+	</SCENARIO>
+	<SCRIPT NAME="actionControlerImplementation" META_OBJECT="Action" CATEGORY="default">
+		<TEXT><![CDATA[
+	public void [[name]]() {
+	// Start of user code for [[name]]
+	
+	// End of user code for [[name]]
+	}
+
+]]></TEXT>
+	</SCRIPT>
+	<SCRIPT NAME="actionInterface" META_OBJECT="Action" CATEGORY="default">
+		<TEXT><![CDATA[
+	public void [[name]]();
+	
+]]></TEXT>
+	</SCRIPT>
+	<SCRIPT NAME="ImplementationControler" META_OBJECT="View" CATEGORY="default" FILE_ENCODING="UTF-8" VISIBILITY="private">
+		<TEXT><![CDATA[
+package com.mia.banque.ui.controler.swt;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.Group;
+
+import com.mia.banque.ui.controler.I[[getModelName]]Controler;
+import com.mia.banque.ui.view.I[[getModelName]]View;
+import com.mia.banque.ui.view.swt.[[getModelName]]View;
+import com.mia.banque.model.I[[getModelName]];
+
+public class [[getModelName]]Controler implements I[[getModelName]]Controler {
+
+	private [[getModelName]]View view;
+	private I[[getModelName]] model;
+
+	public [[getModelName]]Controler(I[[getModelName]] model) {
+		this.model = model;
+	}
+
+
+	public void initView() {
+		Display display = Display.getDefault();
+		
+		
+		this.view = new [[getModelName]]View(display, this.model, this);
+		this.view.open();
+		this.view.layout();
+		
+		while (!this.view.isDisposed()) {
+			if (!display.readAndDispatch()) {
+				display.sleep();
+			}
+		}
+	}
+	
+[[linkActionControlerImplementation]]
+}
+]]></TEXT>
+		<PROPERTY NAME="Filename"/>
+	</SCRIPT>
+	<SCRIPT NAME="ImplementationControler$Filename" META_OBJECT="View" CATEGORY="default">
+		<TEXT><![CDATA[
+com/mia/banque/ui/controler/swt/[[getModelName]]Controler.java
+]]></TEXT>
+	</SCRIPT>
+	<SCRIPT NAME="InterfaceControler" META_OBJECT="View" CATEGORY="default" FILE_ENCODING="UTF-8" VISIBILITY="private">
+		<TEXT><![CDATA[
+package com.mia.banque.ui.controler;
+
+public interface I[[getModelName]]Controler {
+	
+	public void initView();
+	
+[[linkActionInterface]]
+}
+]]></TEXT>
+		<PROPERTY NAME="Filename"/>
+	</SCRIPT>
+	<SCRIPT NAME="InterfaceControler$Filename" META_OBJECT="View" CATEGORY="default">
+		<TEXT><![CDATA[
+com/mia/banque/ui/controler/I[[getModelName]]Controler.java
+]]></TEXT>
+	</SCRIPT>
+	<TEXT_MACRO NAME="linkActionControlerImplementation" META_OBJECT="View" CATEGORY="default" RETURN_TYPE_KIND="primitive" RETURN_TYPE_NAME="String">
+		<TEXT><![CDATA[
+return manager.apply(current.getActions(), "actionControlerImplementation");
+]]></TEXT>
+	</TEXT_MACRO>
+</PACKAGE>

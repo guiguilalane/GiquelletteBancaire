@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE PACKAGE SYSTEM "package.dtd">
+<PACKAGE NAME="generation.ui" METAMODEL="MVC" NUMBER="6"
+ DOCUMENTATION="">
+	<fileHeader version="5" toolName="Mia-Generation" toolVersion="9.0.0"/>
+	<SCENARIO NAME="ScenarioUI" VISIBILITY="public" META_OBJECT="View" CATEGORY="default" DOCUMENTATION="">
+		<SERVICE_CALL NAME="current" PACKAGE="System" META_OBJECT="View"/>
+		<GENERATION_STEP TYPE="Scenario" PACKAGE="generation.ui.controller" META_OBJECT="View" NAME="ScenarioControler"/>
+		<GENERATION_STEP TYPE="Scenario" PACKAGE="generation.ui.view" META_OBJECT="View" NAME="ScenarioView"/>
+	</SCENARIO>
+	<SCRIPT NAME="UIList" META_OBJECT="Model" CATEGORY="default">
+		<TEXT><![CDATA[
+		// Liste
+		Group grp[[name]] = new Group(this, SWT.NONE);
+		grp[[name]].setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		grp[[name]].setText("Liste des [[name]]s");
+		grp[[name]].setLayout(new GridLayout());
+
+		this.[[name]]List = new List(grp[[name]], SWT.BORDER | SWT.V_SCROLL | SWT.SINGLE);
+		this.[[name]]List.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		
+		for (final I[[name]] elt : this.model.get[[name]]s()) {
+			this.[[name]]List.add(elt.toString());
+		}
+
+]]></TEXT>
+	</SCRIPT>
+	<SCRIPT NAME="UIComponent" META_OBJECT="ModelProperty" CATEGORY="default">
+		<TEXT><![CDATA[
+		Label lbl[[name]] = new Label(this, SWT.NONE);
+		lbl[[name]].setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false,
+				1, 1));
+		lbl[[name]].setText("[[name]]");
+
+		Text [[name]]Field = new Text(this, SWT.BORDER);
+		[[name]]Field.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
+				false, 1, 1));
+		[[name]]Field.setText(this.model.get[[name]]());
+
+
+]]></TEXT>
+	</SCRIPT>
+	<SERVICE_MACRO NAME="getModelName" META_OBJECT="View" CATEGORY="default" RETURN_TYPE="View">
+		<TEXT><![CDATA[
+return current.getModel().getName();
+]]></TEXT>
+	</SERVICE_MACRO>
+	<TEXT_MACRO NAME="importModel" META_OBJECT="View" CATEGORY="default" RETURN_TYPE_KIND="primitive" RETURN_TYPE_NAME="String">
+		<TEXT><![CDATA[
+return manager.getString(current.getModel(), "importOwned");
+]]></TEXT>
+	</TEXT_MACRO>
+	<TEXT_MACRO NAME="importOwnedModel" META_OBJECT="View" CATEGORY="default" RETURN_TYPE_KIND="primitive" RETURN_TYPE_NAME="String">
+		<TEXT><![CDATA[
+return manager.apply(current.getModel().getOwnedElements(), "importOwned");
+]]></TEXT>
+	</TEXT_MACRO>
+	<TEXT_MACRO NAME="linkActionInterface" META_OBJECT="View" CATEGORY="default" RETURN_TYPE_KIND="primitive" RETURN_TYPE_NAME="String">
+		<TEXT><![CDATA[
+return manager.apply(current.getActions(), "actionInterface");
+]]></TEXT>
+	</TEXT_MACRO>
+</PACKAGE>

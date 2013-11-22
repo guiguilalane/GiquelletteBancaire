@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE PACKAGE SYSTEM "package.dtd">
+<PACKAGE NAME="Generation" METAMODEL="MVC" NUMBER="3"
+ DOCUMENTATION="">
+	<fileHeader version="5" toolName="Mia-Generation" toolVersion="9.0.0"/>
+	<SCENARIO NAME="globalScenario" VISIBILITY="public" META_OBJECT="UIApplication" CATEGORY="default" DOCUMENTATION="">
+		<SERVICE_CALL NAME="current" PACKAGE="System" META_OBJECT="UIApplication"/>
+		<GENERATION_STEP TYPE="Scenario" PACKAGE="Generation" META_OBJECT="UIApplication" NAME="scenarioModel"/>
+		<GENERATION_STEP TYPE="Scenario" PACKAGE="Generation" META_OBJECT="UIApplication" NAME="scenarioUI"/>
+	</SCENARIO>
+	<SCENARIO NAME="scenarioModel" VISIBILITY="public" META_OBJECT="UIApplication" CATEGORY="default" DOCUMENTATION="">
+		<SERVICE_CALL NAME="allModels" PACKAGE="Generation" META_OBJECT="UIApplication"/>
+		<GENERATION_STEP TYPE="Scenario" PACKAGE="generation.model" META_OBJECT="Model" NAME="ScenarioModel"/>
+	</SCENARIO>
+	<SCENARIO NAME="scenarioUI" VISIBILITY="public" META_OBJECT="UIApplication" CATEGORY="default" DOCUMENTATION="">
+		<SERVICE_CALL NAME="pages" PACKAGE="System" META_OBJECT="UIApplication"/>
+		<GENERATION_STEP TYPE="Scenario" PACKAGE="generation.ui" META_OBJECT="View" NAME="ScenarioUI"/>
+	</SCENARIO>
+	<SCRIPT NAME="importOwned" META_OBJECT="Model" CATEGORY="default">
+		<TEXT><![CDATA[
+import com.mia.banque.model.I[[name]];
+]]></TEXT>
+	</SCRIPT>
+	<TEXT_MACRO NAME="linkimportOwned" META_OBJECT="Model" CATEGORY="default" RETURN_TYPE_KIND="primitive" RETURN_TYPE_NAME="String">
+		<TEXT><![CDATA[
+return manager.apply(current.getOwnedElements(), "importOwned");
+]]></TEXT>
+	</TEXT_MACRO>
+	<SERVICE_MACRO NAME="allModels" META_OBJECT="UIApplication" CATEGORY="default" RETURN_TYPE="Model">
+		<TEXT><![CDATA[
+return manager.allOfClass("Model");
+]]></TEXT>
+	</SERVICE_MACRO>
+</PACKAGE>
